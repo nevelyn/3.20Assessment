@@ -12,13 +12,6 @@ c.) view a list of all the books in the library
 d.) view a list of all the books in a given genre
 e.) search for a book by title or author
 
-BONUS: This is a library, so books can be checked in and checked out. Librarians should also be able to:
-
-1.) Change the checked-in/checked-out status of a copy of a book
-2.) Track the name of the person who has checked out a given book and the date when it is due
-3.) Mark a book as overdue
-4.) View a list of checked-in books only
-
 Library Object(will hold everything)
 Book Object (will have key value pairs of all the books properties)
 Inventory Object (will have key value pairs of Author: Name of Author & Title: Name of Book)
@@ -27,17 +20,35 @@ Search by title and author (figure out how to set that up)
 */
 
 var libary = {
+	inventory: {
+		addBooks = function(){
 
-}
-var inventory = {
+		}
+		removeBooks = function(){
 
+		}
+		viewAllBooks = function(){
+
+		}
+		viewGenres = function(){
+
+		}
+		searchAuthor = function(){
+
+		}
+		searchTitle = function(){
+
+		}
+	}
 }
+
 function Book(title, author, genre, length, status){
 	this.title = title;
 	this.author = author;
 	this.genre = genre;
 	this.length = length;
 	this.status = status;
-
 }
+
+
 
