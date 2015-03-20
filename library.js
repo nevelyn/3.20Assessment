@@ -26,6 +26,13 @@ var library = {
 
 	catalogActions: {
 		addBooks = function(){
+			var titleToBeAdded = sget("Please enter the title of the book");
+			var authorToBeAdded = sget("Please enter the title of the book");
+			var genreToBeAdded = sget("Please enter the title of the book");
+			var lengthToBeAdded = sget("Please enter the title of the book");
+			var statusToBeAdded = sget("Please enter the title of the book");
+			var bookToBeAdded = new Book(titleToBeAdded, authorToBeAdded, genreToBeAdded, lengthToBeAdded, statusToBeAdded);
+			library.inventory.push(bookToBeAdded);
 
 		}
 		removeBooks = function(){
@@ -33,7 +40,7 @@ var library = {
 		}
 		viewAllBooks = function(){
 			for (var i=0; i<library.inventory.length; i++){
-				
+
 				console.log("Here is a list of all of the books in the library: \nTitle: " + library.inventory[i].title + "\nAuthor: " + library.inventory[i].author + "\nGenre: " + library.inventory[i].genre + "\nLength: " +library.inventory[i].length + "\nStatus: " + library.inventory[i].status);
 			}
 
@@ -65,29 +72,37 @@ library.inventory.push(girlBoss, coding, moonWalk);
 
 function startCatalog(){
 	console.log("Welcome to the Oak Park Public Library's Online Catalog!");
-	var displayOptions = sget("What would you like to do today?\n1.View all books\n2.View books by genre\n3.Search books\n4.Add books to inventory\n5.Remove books from inventory\n6.Exit online catalog").trim();
-
-		switch(displayOptions){
-			case'1':
-			break;
-
-			case'2':
-			break;
-
-			case'3':
-			break;
-
-			case'4':
-			break;
-
-			case'5':
-			break;
-
-			case'6':
-			break;
-
-			default:
-
+	displayOptions();
+	function displayOptions(){
+		var menu = sget("What would you like to do today?\n1.View all books\n2.View books by genre\n3.Search books\n4.Add books to inventory\n5.Remove books from inventory\n6.Exit online catalog").trim();
+	
+			switch(menu){
+				case'1': 
+					library.viewAllBooks();
+					displayOptions();
+	
+				break;
+	
+				case'2':
+				break;
+	
+				case'3':
+				break;
+	
+				case'4':
+					library.addBooks();
+					displayOptions();
+				break;
+	
+				case'5':
+				break;
+	
+				case'6':
+				console.log("Thank you for using the Oak Park Public Library's Online Catalog\nHave a GREAT Day!");
+				break;
+	
+				default:
+	}
 		}
 
 }
