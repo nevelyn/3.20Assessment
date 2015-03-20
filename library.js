@@ -22,17 +22,18 @@ Search by title and author (figure out how to set that up)
 var sget = require("sget");
 var library = {
 
-	inventory:[],
+	inventory:[].sort();,
 
 	catalogActions: {
 		addBooks : function(){
 			var titleToBeAdded = sget("Please enter the title of the book");
-			var authorToBeAdded = sget("Please enter the title of the book");
-			var genreToBeAdded = sget("Please enter the title of the book");
-			var lengthToBeAdded = sget("Please enter the title of the book");
-			var statusToBeAdded = sget("Please enter the title of the book");
+			var authorToBeAdded = sget("Please enter the author of the book");
+			var genreToBeAdded = sget("Please enter the genre of the book (i.e. Fiction or Non-Fiction)");
+			var lengthToBeAdded = sget("Please enter the length of the book (i.e. 500 pages)");
+			var statusToBeAdded = sget("Please enter the status of the book (i.e. Available or Checked Out)");
 			var bookToBeAdded = new Book(titleToBeAdded, authorToBeAdded, genreToBeAdded, lengthToBeAdded, statusToBeAdded);
 			library.inventory.push(bookToBeAdded);
+			console.log("\nTitle: " + titleToBeAdded + "Author: " + authorToBeAdded + "Genre: " + genreToBeAdded + "Length: " + lengthToBeAdded + "Status: " + statusToBeAdded + "**********\n");
 
 		},
 		removeBooks : function(){
@@ -48,14 +49,51 @@ var library = {
 
 		},
 		viewGenres : function(){
+			console.log("Here is a list of books by genre\n");
+			if(){
+			
+				for (var i=0; i<library.inventory.length; i++){
+	
+					console.log("\nTitle: " + library.inventory[i].title + "\nAuthor: " + library.inventory[i].author + "\nGenre: " + library.inventory[i].genre + "\nLength: " +library.inventory[i].length + "\nStatus: " + library.inventory[i].status + "\n**********\n");
+				}	
+			}
+
 
 		},
-		searchAuthor : function(){
+		searchForBooks : function(){
+			var searchCriteria = sget("How would you like to search the catalog? \nBy author \nBy title").trim().toLowercase();
+			switch(searchCriteria){
 
+			case"author":
+				var authorToLookFor = sget("Please enter the authors name").trim();
+				for (var i=0; i<library.inventory.length; i++){
+					if(library.inventory.author===authorToLookFor){
+						console.log("\nTitle: " + library.inventory[i].title + "\nAuthor: " + library.inventory[i].author + "\nGenre: " + library.inventory[i].genre + "\nLength: " +library.inventory[i].length + "\nStatus: " + library.inventory[i].status + "\n**********\n");
+					}else{
+						console.log("A book by that author was not found");
+						searchForBooks();
+					}
+				}
+			break;
+
+			case"title":	
+				var titleToLookFor = sget("Please enter the title you'd like to search for");
+				for (var i=0; i<library.inventory.length; i++){
+					if(library.inventory.title===titleToLookFor){
+						console.log("\nTitle: " + library.inventory[i].title + "\nAuthor: " + library.inventory[i].author + "\nGenre: " + library.inventory[i].genre + "\nLength: " +library.inventory[i].length + "\nStatus: " + library.inventory[i].status + "\n**********\n");
+					}else{
+						console.log("A book by that title was not found");
+						searchForBooks();
+					}
+				}
+			break;
+
+			default:
+			console.log("Invalid search criteria\nPlease try again");
+			searchForBooks();
+			break;	
+			}
 		},
-		searchTitle : function(){
-
-		}
 	}
 }
 
@@ -89,6 +127,8 @@ function startCatalog(){
 				break;
 	
 				case'3':
+					searchForBooks();
+					displayOptions();
 				break;
 	
 				case'4':
