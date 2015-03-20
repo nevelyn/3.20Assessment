@@ -10,7 +10,7 @@ a.) add books to the inventory
 b.) remove books from the inventory 
 c.) view a list of all the books in the library
 d.) view a list of all the books in a given genre
-e.) search for a book by title or author
+e.) search for a book by title or author (will have one selection but will build out to by author or title)
 
 Library Object(will hold everything)
 Book Object (will have key value pairs of all the books properties)
@@ -19,7 +19,9 @@ Add, Remove & Display will all be methods of Inventory
 Search by title and author (figure out how to set that up)
 */
 
+var sget = require("sget");
 var libary = {
+	
 	inventory: {
 		addBooks = function(){
 
@@ -49,6 +51,33 @@ function Book(title, author, genre, length, status){
 	this.length = length;
 	this.status = status;
 }
+function startSoftware(){
+	console.log("Welcome to the Oak Park Public Library's Online Catalog!");
+	var displayOptions = sget("What would you like to do today?\n1.View all books\n2.View books by genre\n3.Search books\n4.Add books to inventory\n5.Remove books from inventory\n6.Exit online catalog").trim();
 
+		switch(displayOptions){
+			case'1':
+			break;
+
+			case'2':
+			break;
+
+			case'3':
+			break;
+
+			case'4':
+			break;
+
+			case'5':
+			break;
+
+			case'6':
+			break;
+
+			default:
+
+		}
+
+}
 
 
