@@ -12,11 +12,6 @@ c.) view a list of all the books in the library XXX
 d.) view a list of all the books in a given genre 
 e.) search for a book by title or author (will have one selection but will build out to by author or title)
 
-Library Object(will hold everything)
-Book Object (will have key value pairs of all the books properties)
-Inventory Object (will have key value pairs of Author: Name of Author & Title: Name of Book)
-Add, Remove & Display will all be methods of Inventory
-Search by title and author (figure out how to set that up)
 */
 
 var sget = require("sget");
@@ -37,6 +32,14 @@ var library = {
 
 		},
 		removeBooks : function(){
+			var bookToRemove = sget("\nPlease enter the title of the book you would like to remove");
+			var bookIndex = library.inventory.indexOf(bookToRemove);
+			if(bookIndex > -1){
+				library.inventory.splice(bookIndex,1);
+			}else{
+				console.log("A book by that title was not found");
+				removeBooks();
+			}
 
 		},
 		viewAllBooks : function(){
