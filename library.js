@@ -1,26 +1,10 @@
-/*
-The Library
-
-You've been contracted to write a piece of software for the local library. The software needs to meet the following requirements:
-
-- The software should track the library's inventory of books
-- Each book listing should include the title, author, genre (Fiction, Non-Fiction, etc.), length, and checked-in/checked-out status
-- Librarians should be able to:
-a.) add books to the inventory XXX
-b.) remove books from the inventory 
-c.) view a list of all the books in the library XXX
-d.) view a list of all the books in a given genre 
-e.) search for a book by title or author (will have one selection but will build out to by author or title)
-
-*/
-
 var sget = require("sget");
 var library = {
 
-	inventory:[].sort(),
+	inventory:[],
 
 	catalogActions: {
-		addBooks : function(){
+		addBooks : function(){ //works!!
 			var titleToBeAdded = sget("Please enter the title of the book");
 			var authorToBeAdded = sget("Please enter the author of the book");
 			var genreToBeAdded = sget("Please enter the genre of the book (i.e. Fiction or Non-Fiction)");
@@ -29,29 +13,31 @@ var library = {
 			var bookToBeAdded = new Book(titleToBeAdded, authorToBeAdded, genreToBeAdded, lengthToBeAdded, statusToBeAdded);
 			library.inventory.push(bookToBeAdded);
 			console.log("\nTitle: " + titleToBeAdded + "Author: " + authorToBeAdded + "Genre: " + genreToBeAdded + "Length: " + lengthToBeAdded + "Status: " + statusToBeAdded + "**********\n");
-
 		},
-		removeBooks : function(){
-			var bookToRemove = sget("\nPlease enter the title of the book you would like to remove");
+
+		removeBooks : function(){ //can't figure out why this function is not working
+			var bookToRemove = sget("\nPlease enter the title of the book you would like to remove").trim();
 			var bookIndex = library.inventory.indexOf(bookToRemove);
-			if(bookIndex > -1){
-				library.inventory.splice(bookIndex,1);
-			}else{
-				console.log("A book by that title was not found");
-				removeBooks();
+			for(var i=0; i<library.inventory.length; i++){
+				if(bookIndex > -1){
+							library.inventory.splice(bookIndex,1);
+				}		else{
+							console.log("A book by that title was not found");
+							library.catalogActions.removeBooks();
+						}
 			}
-
 		},
-		viewAllBooks : function(){
+
+		viewAllBooks : function(){//works!!
 			console.log("Here is a list of all of the books in the library\n");
 
 			for (var i=0; i<library.inventory.length; i++){
 
 				console.log("\nTitle: " + library.inventory[i].title + "\nAuthor: " + library.inventory[i].author + "\nGenre: " + library.inventory[i].genre + "\nLength: " +library.inventory[i].length + "\nStatus: " + library.inventory[i].status + "\n**********\n");
 			}
-
 		},
-		viewGenres : function(){
+
+		viewGenres : function(){ //not complete
 			/*console.log("Here is a list of books by genre\n");
 			if(){
 			
@@ -60,10 +46,9 @@ var library = {
 					console.log("\nTitle: " + library.inventory[i].title + "\nAuthor: " + library.inventory[i].author + "\nGenre: " + library.inventory[i].genre + "\nLength: " +library.inventory[i].length + "\nStatus: " + library.inventory[i].status + "\n**********\n");
 				}	
 			}*/
-
-
 		},
-		searchForBooks : function(){
+
+		searchForBooks : function(){//switch case works however the looping does not
 			var searchCriteria = sget("\nHow would you like to search the catalog? \n1.By author \n2.By title").trim();
 			switch(searchCriteria){
 
@@ -98,7 +83,7 @@ var library = {
 			}
 		},
 	}
-}
+};
 
 function Book(title, author, genre, length, status){
 	this.title = title;
@@ -106,50 +91,53 @@ function Book(title, author, genre, length, status){
 	this.genre = genre;
 	this.length = length;
 	this.status = status;
-}
+};
 
-var girlBoss = new Book("Girl Boss", "Sophia Amaruso", "Biography", "200 pages", "Available");
+var girlBoss = new Book("Girl Boss", "Sophia Amaruso", "Non-Fiction", "200 pages", "Available");
 var coding = new Book("JavaScripting", "Ben Rodgers", "Technology", "150 pages", "Available");
 var moonWalk = new Book("The Moonwalking Instructional", "Michael Jackson","Non-fiction", "500 pages", "Available");
 library.inventory.push(girlBoss, coding, moonWalk);
 
-function startCatalog(){
+function startCatalog(){ //works!!!
 	console.log("\nWelcome to the Oak Park Public Library's Online Catalog!\n");
 	displayOptions();
 	function displayOptions(){
-		var menu = sget("What would you like to do today?\n\n1.View all books\n2.View books by genre\n3.Search books\n4.Add books to inventory\n5.Remove books from inventory\n6.Exit online catalog").trim();
+		var menu = sget("What would you like to do?\n\n1.View all books\n2.View books by genre\n3.Search books\n4.Add books to inventory\n5.Remove books from inventory\n6.Exit online catalog").trim();
 	
 			switch(menu){
 				case'1': 
 					library.catalogActions.viewAllBooks();
 					displayOptions();
-	
-				break;
+					break;
 	
 				case'2':
-				break;
+					library.catalogActions.viewGenres();
+					displayOptions();
+					break;
 	
 				case'3':
 					library.catalogActions.searchForBooks();
 					displayOptions();
-				break;
+					break;
 	
 				case'4':
 					library.catalogActions.addBooks();
 					displayOptions();
-				break;
+					break;
 	
 				case'5':
-				break;
+					library.catalogActions.removeBooks();
+					displayOptions();
+					break;
 	
 				case'6':
 				console.log("\nThank you for using the Oak Park Public Library's Online Catalog\nHave a GREAT Day!\n");
-				break;
+					break;
 	
 				default:
 	}
 		}
 
-}
+};
 startCatalog();
 
